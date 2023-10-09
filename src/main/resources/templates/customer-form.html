@@ -1,0 +1,68 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer form</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<header>
+    <h1 class="page-title">Customer form</h1>
+</header>
+<form id="customerForm" class="form">
+    <div class="form-group">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required />
+    </div>
+    <div class="form-group">
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required />
+    </div>
+    <div class="form-group">
+        <label for="driverLicenseNumber">Driver's License Number:</label>
+        <input type="text" id="driverLicenseNumber" name="driverLicenseNumber" required />
+    </div>
+    <div class="form-group">
+        <label for="birthDate">Date of Birth:</label>
+        <input type="date" id="birthDate" name="birthDate" required />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+
+<div class="buttons">
+    <button type="submit" hidden>Submit</button>
+    <a href="/customers" class="btn btn-secondary">Show customers</a>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#customerForm").submit(function (event) {
+            event.preventDefault();
+            var customerData = {
+                firstName: $("#firstName").val(),
+                lastName: $("#lastName").val(),
+                driverLicenseNumber: $("#driverLicenseNumber").val(),
+                birthDate: $("#birthDate").val()
+            };
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "/api/customer/create",
+                data: JSON.stringify(customerData),
+                dataType: "json",
+                success: function (response) {
+                    alert("Successfully created customer : \n" + JSON.stringify(response));
+                },
+                error: function (xhr) {
+                    alert("Error : \n" + xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current rented vehicles</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<header>
+    <h1 class="page-title">List of current rented vehicles</h1>
+</header>
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Brand</th>
+        <th>Model</th>
+        <th>Year</th>
+        <th>Colour</th>
+        <th>Registration</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th colspan="2">Return</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="crv : ${currentRentedVehicles}">
+        <td th:text="${crv.vehicle.id}"></td>
+        <td th:text="${crv.vehicle.brand}"></td>
+        <td th:text="${crv.vehicle.model}"></td>
+        <td th:text="${crv.vehicle.year}"></td>
+        <td th:text="${crv.vehicle.colour}"></td>
+        <td th:text="${crv.vehicle.registration}"></td>
+        <td th:text="${crv.rental.request.startDate}"></td>
+        <td th:text="${crv.rental.request.endDate}"></td>
+        <td >
+            <button th:attr="onclick=|returnVehicle(${crv.rental.id},2)|" class="btn btn-primary" >OK</button>
+        </td>
+        <td >
+            <button th:attr="onclick=|returnVehicle(${crv.rental.id},3)|" class="btn btn-primary" >DAMAGED</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div class="buttons">
+    <button type="submit" hidden>Submit</button>
+    <a href="/rental-requests" class="btn btn-secondary">Rental requests</a>
+</div>
+
+<script>
+    function returnVehicle(vehicleId,status) {
+        var returndDto = {
+            rentalId: vehicleId,
+            status: status
+        };
+        $.ajax({
+            type: "PUT",
+            contentType: "application/json",
+            url: "/api/rental/return/vehicle",
+            data: JSON.stringify(returndDto),
+            dataType: "json",
+            success: function (response) {
+                alert(JSON.stringify(response));
+                window.location.reload();
+            },
+            error: function (xhr) {
+                alert("Error : \n" + xhr.responseText);
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

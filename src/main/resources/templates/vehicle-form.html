@@ -1,0 +1,71 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle form</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<header>
+    <h1 class="page-title">Vehicle form</h1>
+</header>
+<form id="vehicleForm" class="form">
+    <div class="form-group">
+        <label for="brand">Brand:</label>
+        <input type="text" id="brand" name="brand" required />
+    </div>
+    <div class="form-group">
+        <label for="model">Model:</label>
+        <input type="text" id="model" name="model" required />
+    </div>
+    <div class="form-group">
+        <label for="registration">Registration:</label>
+        <input type="text" id="registration" name="registration" required />
+    </div>
+    <div class="form-group">
+        <label for="colour">Colour:</label>
+        <input type="text" id="colour" name="colour" required />
+    </div>
+    <div class="form-group">
+        <label for="year">Year:</label>
+        <input type="number" id="year" name="year" required />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+<div class="buttons">
+    <button type="submit" hidden>Submit</button>
+    <a href="/vehicles" class="btn btn-secondary">Show vehicles</a>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#vehicleForm").submit(function (event) {
+            event.preventDefault();
+            var vehicleData = {
+                brand: $("#brand").val(),
+                model: $("#model").val(),
+                registration: $("#registration").val(),
+                colour: $("#colour").val(),
+                year: $("#year").val()
+            };
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "/api/vehicle/create",
+                data: JSON.stringify(vehicleData),
+                dataType: "json",
+                success: function (response) {
+                    alert("Successfully created vehicle : \n" + JSON.stringify(response));
+                },
+                error: function (xhr) {
+                    alert("Error : \n" + xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

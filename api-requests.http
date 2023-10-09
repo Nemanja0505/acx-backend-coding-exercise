@@ -1,0 +1,56 @@
+### Get all customers
+GET http://localhost:8080/api/customer/all
+
+
+### Create new customer
+POST http://localhost:8080/api/customer/create
+Content-Type: application/json
+
+{
+  "firstName" : "Tom",
+  "lastName" : "Johns",
+  "driverLicenseNumber" : "BN1234",
+  "birthDate": "1985-10-07"
+}
+
+### Get currnet rented vehicles
+GET http://localhost:8080/api/vehicle/all-current-rented
+
+
+### Create new vehicle
+POST http://localhost:8080/api/vehicle/create
+Content-Type: application/json
+
+{
+  "brand" : "Toyota",
+  "model": "Malibu",
+  "registration" : "MN888",
+  "colour" : "Yellow",
+  "year" : 2022
+}
+
+
+### Create request for renting vehicle
+POST http://localhost:8080/api/rental/request
+Content-Type: application/json
+
+{
+  "customerId" : 4,
+  "vehicleId" : 2,
+  "startDate" : "2023-11-06",
+  "endDate" : "2023-11-08"
+}
+
+
+### Approve rental request
+PUT http://localhost:8080/api/rental/approve/request/1
+
+
+### Retrun vehicle
+PUT http://localhost:8080/api/rental/return/vehicle
+Content-Type: application/json
+
+{
+  "rentalId": 1,
+  "status": 2
+}

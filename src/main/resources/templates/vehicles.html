@@ -1,0 +1,40 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicles</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+<header>
+    <h1 class="page-title">Vehicles</h1>
+</header>
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Brand</th>
+        <th>Model</th>
+        <th>Year</th>
+        <th>Colour</th>
+        <th>Registration</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="v : ${vehicles}">
+        <td th:text="${v.id}"></td>
+        <td th:text="${v.brand}"></td>
+        <td th:text="${v.model}"></td>
+        <td th:text="${v.year}"></td>
+        <td th:text="${v.colour}"></td>
+        <td th:text="${v.registration}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="buttons">
+    <button type="submit" hidden>Submit</button>
+    <a href="/create-vehicle" class="btn btn-secondary">Create new</a>
+</div>
+</body>
+</html>

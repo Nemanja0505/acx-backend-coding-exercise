@@ -1,0 +1,20 @@
+### List of all customers
+GET http://localhost:8080/customers
+
+### Create new customer
+GET http://localhost:8080/create-customer
+
+### List of all vehicles
+GET http://localhost:8080/vehicles
+
+### Create new vehicle
+GET http://localhost:8080/create-vehicle
+
+### Create new rental request
+GET http://localhost:8080/create-rental-request
+
+### List of all rental requests
+GET http://localhost:8080/rental-requests
+
+### List of all rented vehicles
+GET http://localhost:8080/rented-vehicles

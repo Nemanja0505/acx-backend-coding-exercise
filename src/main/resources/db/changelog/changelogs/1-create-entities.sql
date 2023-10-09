@@ -1,0 +1,6 @@
+create table customer (id bigint not null auto_increment, deleted bit default 0, persisted_at datetime default current_timestamp(), version integer not null default 0, first_name varchar(255) not null, last_name varchar(255) not null , birth_date date, driver_license_number varchar(255) unique not null , primary key (id));
+create table vehicle (id bigint not null auto_increment, deleted bit default 0,  persisted_at datetime default current_timestamp(), version integer not null default 0, brand varchar(255) not null, model varchar(255) not null , year_production integer, colour varchar(255) not null ,registration varchar(255) unique not null , primary key (id));
+create table rental (id bigint not null auto_increment, deleted bit default 0,  persisted_at datetime default current_timestamp(), version integer not null default 0, start_date date not null, end_date date not null, status integer default 0,customer_id bigint not null, vehicle_id bigint not null, primary key (id));
+
+alter table rental add constraint FK_customer_to_rental foreign key (customer_id) references customer (id);
+alter table rental add constraint FK_vehicle_to_rental foreign key (vehicle_id) references vehicle (id);

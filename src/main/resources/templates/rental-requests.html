@@ -1,0 +1,64 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rental requests</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<header>
+    <h1 class="page-title">Rental requests</h1>
+</header>
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Vehicle Id</th>
+        <th>Customer Id</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="r : ${rentalRequests}">
+        <td th:text="${r.id}"></td>
+        <td th:text="${r.request.vehicleId}"></td>
+        <td th:text="${r.request.customerId}"></td>
+        <td th:text="${r.request.startDate}"></td>
+        <td th:text="${r.request.endDate}"></td>
+        <td >
+            <button th:attr="onclick=|approveRentalRequest(${r.id})|" class="btn btn-primary">APPROVE</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div class="buttons">
+    <button type="submit" hidden>Submit</button>
+    <a href="/create-rental-request" class="btn btn-secondary">Create new</a>
+    <button type="submit" hidden>Submit</button>
+    <a href="/rented-vehicles" class="btn btn-secondary">Rented vehicles</a>
+</div>
+
+<script>
+    function approveRentalRequest(rentalRequestId) {
+        $.ajax({
+            type: "PUT",
+            contentType: "application/json",
+            url: "/api/rental/approve/request/" + rentalRequestId,
+            data: JSON.stringify({}),
+            dataType: "json",
+            success: function (response) {
+                alert(JSON.stringify(response));
+                window.location.reload();
+            },
+            error: function (xhr) {
+                alert("Error : \n" + xhr.responseText);
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
