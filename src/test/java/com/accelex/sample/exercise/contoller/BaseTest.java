@@ -22,8 +22,8 @@ public abstract class BaseTest {
         return DOMAIN + port + uri;
     }
 
-    protected  <T> ResponseEntity<?> sendRequest(String api, HttpMethod method,T body, Class<?> responseType){
-        HttpEntity<T> entity = new HttpEntity<>(body,headers);
+    protected  <T> ResponseEntity<T> sendRequest(String api, HttpMethod method,Object body, Class<T> responseType){
+        HttpEntity<Object> entity = new HttpEntity<>(body,headers);
         return restTemplate.exchange(
                 createURLWithPort(api),
                 method, entity, responseType);
